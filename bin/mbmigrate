@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+var options = argv = require('optimist').argv,
+    MBTiles = require('..');
+
+// Show help.
+if (argv.help || argv._.length < 1) {
+    console.warn('Usage: mbmigrate [FILE]');
+    console.warn('  Upgrade a MBTiles file to the new template system.');
+    console.warn('Examples:');
+    console.warn('  mbmigrate world.mbtiles');
+    process.exit();
+}
+
+// Grab args.
+var filename = argv._[0];
+
+var f = new MBTiles(filename, function() {
+    f.migrate(function(err, output) {
+        if (err) throw err;
+        f._close();
+        console.warn(output.message);
+    });
+});

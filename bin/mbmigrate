@@ -16,7 +16,7 @@ if (argv.help || argv._.length < 1) {
 var filename = argv._[0];
 
 var f = new MBTiles(filename, function() {
-    f.migrate(function(err, output) {
+    f.migrate(options.dryrun, function(err, output) {
         if (err) throw err;
         f._close();
         console.warn(output.message);
